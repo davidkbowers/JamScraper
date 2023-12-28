@@ -11,7 +11,7 @@ environ.Env.read_env()
 # SECURITY WARNING: Modify this secret key if using in production!
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
-DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 DATABASES = {
     "default": env.db("DATABASE_URL")
@@ -19,9 +19,12 @@ DATABASES = {
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)
 
-INSTALLED_APPS = ("db",)
+INSTALLED_APPS = ("db", "scraper.AppConfig",)
+
+ROOT_URLCONF = "urls"  # django will look for urls.py in the same directory as settings.py
+ALLOWED_HOSTS = ["*"]  # allow all hosts (or put your sliplane domain here)
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
